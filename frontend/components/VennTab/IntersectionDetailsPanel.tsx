@@ -66,11 +66,11 @@ export function IntersectionDetailsPanel({
             <h3 className="text-lg font-semibold">Пересечение</h3>
             <p className="text-sm text-default-500">{selection.label}</p>
           </div>
-          <Button size="sm" variant="light" onPress={onClear}>
+          <Button size="sm" variant="ghost" onPress={onClear}>
             Сбросить
           </Button>
         </div>
-        <Chip color="primary" variant="flat">
+        <Chip color="accent" variant="soft">
           {selection.size} треков
         </Chip>
       </CardHeader>

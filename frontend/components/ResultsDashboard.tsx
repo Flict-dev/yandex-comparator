@@ -1,6 +1,6 @@
 "use client";
 
-import { Tab, Tabs } from "@heroui/react";
+import { Tab, TabList, TabPanel, Tabs } from "@heroui/react";
 import { useMemo, useState } from "react";
 import { CompareResponse, IntersectionSelection, Playlist } from "../lib/types";
 import { buildPlaylistSets, intersectionKeys, intersectionLabel } from "../lib/setMath";
@@ -57,7 +57,13 @@ export function ResultsDashboard({ data }: { data: CompareResponse }) {
   return (
     <section className="mt-8 space-y-6">
       <Tabs selectedKey={activeTab} onSelectionChange={(key) => setActiveTab(String(key))}>
-        <Tab key="diagram" title="Диаграмма">
+        <TabList>
+          <Tab id="diagram">Диаграмма</Tab>
+          <Tab id="matrix">Матрица</Tab>
+          <Tab id="common">Общие для всех</Tab>
+          <Tab id="intersection">Треки пересечения</Tab>
+        </TabList>
+        <TabPanel id="diagram">
           <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
             <div className="space-y-6">
               <SubsetSelector
@@ -80,30 +86,30 @@ export function ResultsDashboard({ data }: { data: CompareResponse }) {
               onClear={() => setSelection(null)}
             />
           </div>
-        </Tab>
-        <Tab key="matrix" title="Матрица">
+        </TabPanel>
+        <TabPanel id="matrix">
           <SimilarityMatrix
             playlists={data.playlists}
             playlistSets={playlistSets}
             onPairSelect={handleSelectIntersection}
           />
-        </Tab>
-        <Tab key="common" title="Общие для всех">
+        </TabPanel>
+        <TabPanel id="common">
           <CommonToAll
             playlists={data.playlists}
             playlistSets={playlistSets}
             tracksIndex={data.tracks_index}
             onSelect={handleSelectIntersection}
           />
-        </Tab>
-        <Tab key="intersection" title="Треки пересечения">
+        </TabPanel>
+        <TabPanel id="intersection">
           <IntersectionDetailsPanel
             selection={selection}
             tracks={selectionTracks}
             onClear={() => setSelection(null)}
             showEmptyState
           />
-        </Tab>
+        </TabPanel>
       </Tabs>
     </section>
   );

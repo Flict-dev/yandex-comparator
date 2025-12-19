@@ -93,7 +93,7 @@ export function SimilarityMatrix({
                             !isDiagonal && onPairSelect([row.id, column.id], cell.size)
                           }
                         >
-                          <Chip size="sm" variant="flat" color={isDiagonal ? "default" : "primary"}>
+                          <Chip size="sm" variant="soft" color={isDiagonal ? "default" : "accent"}>
                             {formatPercent(cell.score)}
                           </Chip>
                           {!isDiagonal && (
@@ -126,7 +126,7 @@ export function SimilarityMatrix({
                 </p>
                 <p className="text-xs text-default-500">Пересечение: {pair.size}</p>
               </div>
-              <Chip size="sm" color="primary" variant="flat">
+              <Chip size="sm" color="accent" variant="soft">
                 {formatPercent(pair.score)}
               </Chip>
             </button>

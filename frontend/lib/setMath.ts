@@ -62,7 +62,7 @@ export const buildVennSets = (
 ): VennSet[] => {
   const subsets = generateSubsets(playlistIds);
   return subsets.map((subset) => {
-    const sets = subset.map((id) => playlistSets.get(id) || new Set());
+    const sets = subset.map((id) => playlistSets.get(id) ?? new Set<string>());
     const size = intersectionSize(sets);
     return { sets: subset, size };
   });

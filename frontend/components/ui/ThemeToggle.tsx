@@ -9,7 +9,7 @@ export function ThemeToggle() {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button variant="bordered" size="sm">
+        <Button variant="ghost" size="sm">
           Тема: {theme}
         </Button>
       </DropdownTrigger>
