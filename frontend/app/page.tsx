@@ -107,7 +107,6 @@ export default function HomePage() {
                 variant="primary"
                 onPress={handleCompare}
                 isDisabled={!formValidation.isValid || mutation.isPending}
-                isLoading={mutation.isPending}
               >
                 Сравнить
               </Button>
