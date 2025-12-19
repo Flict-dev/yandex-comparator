@@ -104,7 +104,7 @@ export default function HomePage() {
             )}
             <div className="flex flex-wrap items-center gap-3">
               <Button
-                color="primary"
+                variant="primary"
                 onPress={handleCompare}
                 isDisabled={!formValidation.isValid || mutation.isPending}
                 isLoading={mutation.isPending}
