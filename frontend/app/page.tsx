@@ -121,10 +121,10 @@ export default function HomePage() {
 
         {summary && (
           <div className="mt-6 flex flex-wrap gap-3">
-            <Chip color="primary" variant="flat">
+            <Chip color="accent" variant="flat">
               Плейлистов: {summary.totalPlaylists}
             </Chip>
-            <Chip color="secondary" variant="flat">
+            <Chip color="default" variant="flat">
               Всего треков: {summary.totalTracks}
             </Chip>
             <Chip color="success" variant="flat">
