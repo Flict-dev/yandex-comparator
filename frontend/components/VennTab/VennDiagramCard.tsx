@@ -81,7 +81,7 @@ export function VennDiagramCard({
       const tooltip = d3.select(tooltipRef.current);
 
       selection.selectAll("g").on("mouseover", function (event, datum: any) {
-        venn.sortAreas(container, datum);
+        venn.sortAreas(selection, datum);
         d3.select(this).transition().style("fill-opacity", 0.7);
         tooltip
           .style("opacity", 1)

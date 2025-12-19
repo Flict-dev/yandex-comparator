@@ -91,7 +91,7 @@ export function SubsetSelector({
             Выберите от 2 до 5 плейлистов. Сейчас выбрано: {selectedLabel || "—"}
           </p>
         </div>
-        <Chip color="primary" variant="flat">
+        <Chip color="accent" variant="soft">
           Общих треков: {intersectionCount}
         </Chip>
       </div>
@@ -107,12 +107,13 @@ export function SubsetSelector({
           <Select
             id="playlist-select"
             selectionMode="multiple"
-            selectedKeys={new Set(selectedIds)}
-            onSelectionChange={(keys) => handleSelectionChange(keys as Set<string>)}
+            value={selectedIds}
+            onChange={(keys) => handleSelectionChange(new Set(keys as string[]))}
+            placeholder="Выберите плейлисты"
             className="mt-2"
           >
             <Select.Trigger>
-              <Select.Value placeholder="Выберите плейлисты" />
+              <Select.Value />
               <Select.Indicator />
             </Select.Trigger>
             <Select.Popover>

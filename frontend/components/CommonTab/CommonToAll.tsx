@@ -59,7 +59,7 @@ export function CommonToAll({
             Открыть пересечение
           </Button>
         </div>
-        <Chip color="accent" variant="flat">
+        <Chip color="accent" variant="soft">
           {tracks.length} треков
         </Chip>
       </CardHeader>

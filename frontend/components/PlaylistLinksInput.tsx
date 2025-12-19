@@ -89,7 +89,7 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
         <Button variant="secondary" onPress={modalState.open}>
           Вставить списком
         </Button>
-        <Button variant="light" onPress={handleClear}>
+        <Button variant="ghost" onPress={handleClear}>
           Очистить всё
         </Button>
         {hasErrors && (
@@ -115,8 +115,7 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
                 {values.length > 1 ? (
                   <Button
                     size="sm"
-                    variant="light"
-                    color="danger"
+                    variant="danger-soft"
                     onPress={() => handleRemove(index)}
                   >
                     Удалить
@@ -138,14 +137,13 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
             </ModalHeader>
             <ModalBody>
               <TextArea
-                minRows={6}
                 placeholder="Каждая ссылка с новой строки"
                 value={bulkText}
-                onChange={setBulkText}
+                onChange={(event) => setBulkText(event.target.value)}
               />
             </ModalBody>
             <ModalFooter>
-              <Button variant="light" onPress={modalState.close}>
+              <Button variant="ghost" onPress={modalState.close}>
                 Отмена
               </Button>
               <Button variant="primary" onPress={handleBulkApply}>
