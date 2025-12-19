@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.venn-tooltip {
+  position: absolute;
+  pointer-events: none;
+  padding: 0.4rem 0.6rem;
+  background: rgba(15, 23, 42, 0.9);
+  color: white;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  z-index: 20;
+  transform: translate(-50%, -120%);
+  white-space: nowrap;
+}
