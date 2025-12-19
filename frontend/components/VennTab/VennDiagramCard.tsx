@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, CardHeader } from "@heroui/react";
+import { Card, CardContent, CardHeader } from "@heroui/react";
 import { useEffect, useMemo, useRef } from "react";
 import { buildVennSets } from "../../lib/setMath";
 import { Playlist } from "../../lib/types";
@@ -121,7 +121,7 @@ export function VennDiagramCard({
           Наведите, чтобы увидеть размер пересечения, и кликните для списка треков.
         </p>
       </CardHeader>
-      <CardBody>
+      <CardContent>
         <div className="relative min-h-[420px]">
           <div ref={containerRef} className="w-full" />
           <div ref={tooltipRef} className="venn-tooltip" style={{ opacity: 0 }} />
@@ -137,7 +137,7 @@ export function VennDiagramCard({
             </div>
           ))}
         </div>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 }
