@@ -76,7 +76,7 @@ export function IntersectionDetailsPanel({
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="flex flex-wrap gap-2">
-          <Button size="sm" color="primary" onPress={handleCsv}>
+          <Button size="sm" variant="primary" onPress={handleCsv}>
             Скачать CSV
           </Button>
           <Button size="sm" variant="flat" onPress={handleCopy}>

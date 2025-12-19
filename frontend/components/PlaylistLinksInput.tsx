@@ -83,7 +83,7 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <Button color="primary" onPress={handleAdd}>
+        <Button variant="primary" onPress={handleAdd}>
           Добавить
         </Button>
         <Button variant="flat" onPress={modalState.open}>
@@ -148,7 +148,7 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
               <Button variant="light" onPress={modalState.close}>
                 Отмена
               </Button>
-              <Button color="primary" onPress={handleBulkApply}>
+              <Button variant="primary" onPress={handleBulkApply}>
                 Применить
               </Button>
             </ModalFooter>
