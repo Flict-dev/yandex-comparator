@@ -3,16 +3,9 @@
 import {
   Button,
   Card,
-  CardBody,
+  CardContent,
   CardHeader,
   Chip,
-  ScrollShadow,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
 } from "@heroui/react";
 import { useMemo } from "react";
 import { formatDuration } from "../../lib/format";
@@ -42,12 +35,12 @@ export function CommonToAll({
   if (tracks.length === 0) {
     return (
       <Card>
-        <CardBody>
+        <CardContent>
           <p className="text-sm text-default-500">
             Общих треков для всех плейлистов не найдено. Попробуйте выбрать поднабор
             для диаграммы.
           </p>
-        </CardBody>
+        </CardContent>
       </Card>
     );
   }
@@ -70,26 +63,28 @@ export function CommonToAll({
           {tracks.length} треков
         </Chip>
       </CardHeader>
-      <CardBody>
-        <ScrollShadow className="max-h-[420px]">
-          <Table removeWrapper aria-label="Common tracks">
-            <TableHeader>
-              <TableColumn>Трек</TableColumn>
-              <TableColumn>Артисты</TableColumn>
-              <TableColumn>Длительность</TableColumn>
-            </TableHeader>
-            <TableBody items={tracks}>
-              {(track) => (
-                <TableRow key={track.track_key}>
-                  <TableCell>{track.title}</TableCell>
-                  <TableCell>{track.artists.join(", ")}</TableCell>
-                  <TableCell>{formatDuration(track.duration_ms)}</TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </ScrollShadow>
-      </CardBody>
+      <CardContent>
+        <div className="max-h-[420px] overflow-auto rounded-lg border border-default-200">
+          <table className="min-w-full text-left text-sm">
+            <thead className="sticky top-0 bg-content1 text-xs uppercase text-default-500">
+              <tr>
+                <th className="px-3 py-2 font-medium">Трек</th>
+                <th className="px-3 py-2 font-medium">Артисты</th>
+                <th className="px-3 py-2 font-medium">Длительность</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tracks.map((track) => (
+                <tr key={track.track_key} className="border-t border-default-200">
+                  <td className="px-3 py-2">{track.title}</td>
+                  <td className="px-3 py-2">{track.artists.join(", ")}</td>
+                  <td className="px-3 py-2">{formatDuration(track.duration_ms)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
     </Card>
   );
 }

@@ -3,16 +3,9 @@
 import {
   Button,
   Card,
-  CardBody,
+  CardContent,
   CardHeader,
   Chip,
-  ScrollShadow,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
 } from "@heroui/react";
 import { downloadCsv, tracksToCsv } from "../../lib/csv";
 import { formatDuration } from "../../lib/format";
@@ -44,11 +37,11 @@ export function IntersectionDetailsPanel({
   if (!selection && showEmptyState) {
     return (
       <Card>
-        <CardBody>
+        <CardContent>
           <p className="text-sm text-default-500">
             Выберите область пересечения на диаграмме или пару в матрице.
           </p>
-        </CardBody>
+        </CardContent>
       </Card>
     );
   }
@@ -56,11 +49,11 @@ export function IntersectionDetailsPanel({
   if (!selection) {
     return (
       <Card>
-        <CardBody>
+        <CardContent>
           <p className="text-sm text-default-500">
             Кликните по пересечению, чтобы увидеть список треков.
           </p>
-        </CardBody>
+        </CardContent>
       </Card>
     );
   }
@@ -81,7 +74,7 @@ export function IntersectionDetailsPanel({
           {selection.size} треков
         </Chip>
       </CardHeader>
-      <CardBody className="space-y-3">
+      <CardContent className="space-y-3">
         <div className="flex flex-wrap gap-2">
           <Button size="sm" color="primary" onPress={handleCsv}>
             Скачать CSV
@@ -90,38 +83,48 @@ export function IntersectionDetailsPanel({
             Скопировать список
           </Button>
         </div>
-        <ScrollShadow className="max-h-[420px]">
-          <Table removeWrapper aria-label="intersection tracks">
-            <TableHeader>
-              <TableColumn>Трек</TableColumn>
-              <TableColumn>Артисты</TableColumn>
-              <TableColumn>Длительность</TableColumn>
-            </TableHeader>
-            <TableBody emptyContent="Нет треков" items={tracks}>
-              {(track) => (
-                <TableRow key={track.track_key}>
-                  <TableCell>
-                    {track.link ? (
-                      <a
-                        href={track.link}
-                        className="text-primary hover:underline"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {track.title}
-                      </a>
-                    ) : (
-                      track.title
-                    )}
-                  </TableCell>
-                  <TableCell>{track.artists.join(", ")}</TableCell>
-                  <TableCell>{formatDuration(track.duration_ms)}</TableCell>
-                </TableRow>
+        <div className="max-h-[420px] overflow-auto rounded-lg border border-default-200">
+          <table className="min-w-full text-left text-sm">
+            <thead className="sticky top-0 bg-content1 text-xs uppercase text-default-500">
+              <tr>
+                <th className="px-3 py-2 font-medium">Трек</th>
+                <th className="px-3 py-2 font-medium">Артисты</th>
+                <th className="px-3 py-2 font-medium">Длительность</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tracks.length === 0 ? (
+                <tr>
+                  <td className="px-3 py-4 text-default-500" colSpan={3}>
+                    Нет треков
+                  </td>
+                </tr>
+              ) : (
+                tracks.map((track) => (
+                  <tr key={track.track_key} className="border-t border-default-200">
+                    <td className="px-3 py-2">
+                      {track.link ? (
+                        <a
+                          href={track.link}
+                          className="text-primary hover:underline"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {track.title}
+                        </a>
+                      ) : (
+                        track.title
+                      )}
+                    </td>
+                    <td className="px-3 py-2">{track.artists.join(", ")}</td>
+                    <td className="px-3 py-2">{formatDuration(track.duration_ms)}</td>
+                  </tr>
+                ))
               )}
-            </TableBody>
-          </Table>
-        </ScrollShadow>
-      </CardBody>
+            </tbody>
+          </table>
+        </div>
+      </CardContent>
     </Card>
   );
 }

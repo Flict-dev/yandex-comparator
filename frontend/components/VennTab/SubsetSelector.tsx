@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Chip, Select, SelectItem } from "@heroui/react";
+import { Button, Chip, ListBox, Select } from "@heroui/react";
 import { useMemo } from "react";
 import { Playlist } from "../../lib/types";
 import { jaccard, intersectionSize } from "../../lib/setMath";
@@ -97,17 +97,35 @@ export function SubsetSelector({
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-[2fr_1fr]">
-        <Select
-          selectionMode="multiple"
-          selectedKeys={new Set(selectedIds)}
-          onSelectionChange={(keys) => handleSelectionChange(keys as Set<string>)}
-          label="Плейлисты"
-          description="Диаграмма строится для выбранных плейлистов"
-        >
-          {items.map((item) => (
-            <SelectItem key={item.key}>{item.label}</SelectItem>
-          ))}
-        </Select>
+        <div>
+          <label className="text-sm font-medium text-default-700" htmlFor="playlist-select">
+            Плейлисты
+          </label>
+          <p className="text-xs text-default-500">
+            Диаграмма строится для выбранных плейлистов
+          </p>
+          <Select
+            id="playlist-select"
+            selectionMode="multiple"
+            selectedKeys={new Set(selectedIds)}
+            onSelectionChange={(keys) => handleSelectionChange(keys as Set<string>)}
+            className="mt-2"
+          >
+            <Select.Trigger>
+              <Select.Value placeholder="Выберите плейлисты" />
+              <Select.Indicator />
+            </Select.Trigger>
+            <Select.Popover>
+              <ListBox items={items} selectionMode="multiple">
+                {(item) => (
+                  <ListBox.Item id={item.key} textValue={item.label}>
+                    {item.label}
+                  </ListBox.Item>
+                )}
+              </ListBox>
+            </Select.Popover>
+          </Select>
+        </div>
         <div className="flex flex-wrap gap-2">
           <Button size="sm" variant="flat" onPress={() => onQuickSelect(topSimilar)}>
             Самые похожие 3

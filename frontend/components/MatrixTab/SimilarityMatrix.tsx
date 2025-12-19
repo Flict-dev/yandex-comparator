@@ -2,15 +2,9 @@
 
 import {
   Card,
-  CardBody,
+  CardContent,
   CardHeader,
   Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
 } from "@heroui/react";
 import { useMemo } from "react";
 import { formatPercent } from "../../lib/format";
@@ -66,24 +60,28 @@ export function SimilarityMatrix({
           Кликните ячейку, чтобы увидеть пересечение пары.
         </p>
       </CardHeader>
-      <CardBody className="space-y-6">
+      <CardContent className="space-y-6">
         <div className="hidden overflow-auto md:block">
-          <Table removeWrapper aria-label="Similarity matrix">
-            <TableHeader>
-              <TableColumn>Плейлист</TableColumn>
-              {playlists.map((playlist) => (
-                <TableColumn key={playlist.id}>{playlist.title}</TableColumn>
-              ))}
-            </TableHeader>
-            <TableBody>
+          <table className="min-w-full border-separate border-spacing-0 text-left text-sm">
+            <thead className="sticky top-0 bg-content1 text-xs uppercase text-default-500">
+              <tr>
+                <th className="px-3 py-2 font-medium">Плейлист</th>
+                {playlists.map((playlist) => (
+                  <th key={playlist.id} className="px-3 py-2 font-medium">
+                    {playlist.title}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
               {playlists.map((row, rowIndex) => (
-                <TableRow key={row.id}>
-                  <TableCell className="font-semibold">{row.title}</TableCell>
+                <tr key={row.id} className="border-t border-default-200">
+                  <td className="px-3 py-2 font-semibold">{row.title}</td>
                   {playlists.map((column, colIndex) => {
                     const cell = matrix[rowIndex][colIndex];
                     const isDiagonal = row.id === column.id;
                     return (
-                      <TableCell key={column.id}>
+                      <td key={column.id} className="px-3 py-2">
                         <button
                           type="button"
                           className={`flex items-center gap-2 rounded-lg px-2 py-1 text-sm transition ${
@@ -102,13 +100,13 @@ export function SimilarityMatrix({
                             <span className="text-xs text-default-500">{cell.size}</span>
                           )}
                         </button>
-                      </TableCell>
+                      </td>
                     );
                   })}
-                </TableRow>
+                </tr>
               ))}
-            </TableBody>
-          </Table>
+            </tbody>
+          </table>
         </div>
 
         <div className="space-y-3 md:hidden">
@@ -134,7 +132,7 @@ export function SimilarityMatrix({
             </button>
           ))}
         </div>
-      </CardBody>
+      </CardContent>
     </Card>
   );
 }

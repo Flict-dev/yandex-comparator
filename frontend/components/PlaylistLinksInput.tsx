@@ -2,14 +2,20 @@
 
 import {
   Button,
+  Description,
+  FieldError,
   Input,
+  Label,
   Modal,
   ModalBody,
-  ModalContent,
   ModalFooter,
   ModalHeader,
-  Textarea,
-  useDisclosure,
+  ModalHeading,
+  ModalContainer,
+  ModalDialog,
+  TextField,
+  TextArea,
+  useOverlayState,
 } from "@heroui/react";
 import { useMemo, useState } from "react";
 import { likelyYandexPlaylist, validatePlaylistUrl } from "../lib/validate";
@@ -28,7 +34,7 @@ const normalizeList = (text: string) => {
 };
 
 export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const modalState = useOverlayState();
   const [bulkText, setBulkText] = useState("");
 
   const errors = useMemo(
@@ -71,7 +77,7 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
     const next = normalizeList(bulkText);
     onChange(next.length ? next : [""]);
     setBulkText("");
-    onOpenChange();
+    modalState.close();
   };
 
   return (
@@ -80,7 +86,7 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
         <Button color="primary" onPress={handleAdd}>
           Добавить
         </Button>
-        <Button variant="flat" onPress={() => onOpen()}>
+        <Button variant="flat" onPress={modalState.open}>
           Вставить списком
         </Button>
         <Button variant="light" onPress={handleClear}>
@@ -97,16 +103,16 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
         {values.map((value, index) => {
           const hint = value && likelyYandexPlaylist(value) ? "Похоже на плейлист Яндекс.Музыки" : "";
           return (
-            <Input
+            <TextField
               key={`${index}-${value}`}
-              label={`Ссылка ${index + 1}`}
-              value={value}
-              onValueChange={(nextValue) => handleValueChange(index, nextValue)}
               isInvalid={Boolean(errors[index])}
-              errorMessage={errors[index]}
-              description={hint}
-              endContent={
-                values.length > 1 ? (
+              value={value}
+              onChange={(nextValue) => handleValueChange(index, nextValue)}
+            >
+              <Label>Ссылка {index + 1}</Label>
+              <div className="flex flex-wrap items-center gap-2">
+                <Input className="min-w-[220px] flex-1" />
+                {values.length > 1 ? (
                   <Button
                     size="sm"
                     variant="light"
@@ -115,37 +121,39 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
                   >
                     Удалить
                   </Button>
-                ) : null
-              }
-            />
+                ) : null}
+              </div>
+              {hint ? <Description>{hint}</Description> : null}
+              {errors[index] ? <FieldError>{errors[index]}</FieldError> : null}
+            </TextField>
           );
         })}
       </div>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>Вставить список ссылок</ModalHeader>
-              <ModalBody>
-                <Textarea
-                  minRows={6}
-                  placeholder="Каждая ссылка с новой строки"
-                  value={bulkText}
-                  onValueChange={setBulkText}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button variant="light" onPress={onClose}>
-                  Отмена
-                </Button>
-                <Button color="primary" onPress={handleBulkApply}>
-                  Применить
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
+      <Modal state={modalState}>
+        <ModalContainer>
+          <ModalDialog>
+            <ModalHeader>
+              <ModalHeading>Вставить список ссылок</ModalHeading>
+            </ModalHeader>
+            <ModalBody>
+              <TextArea
+                minRows={6}
+                placeholder="Каждая ссылка с новой строки"
+                value={bulkText}
+                onChange={setBulkText}
+              />
+            </ModalBody>
+            <ModalFooter>
+              <Button variant="light" onPress={modalState.close}>
+                Отмена
+              </Button>
+              <Button color="primary" onPress={handleBulkApply}>
+                Применить
+              </Button>
+            </ModalFooter>
+          </ModalDialog>
+        </ModalContainer>
       </Modal>
     </section>
   );

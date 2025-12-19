@@ -3,11 +3,10 @@
 import {
   Button,
   Card,
-  CardBody,
+  CardContent,
   CardHeader,
   Chip,
-  Divider,
-  Spacer,
+  Separator,
 } from "@heroui/react";
 import { useMemo, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -86,7 +85,7 @@ export default function HomePage() {
           <ThemeToggle />
         </header>
 
-        <Spacer y={6} />
+        <div className="h-6" aria-hidden="true" />
 
         <Card>
           <CardHeader>
@@ -97,8 +96,8 @@ export default function HomePage() {
               </p>
             </div>
           </CardHeader>
-          <Divider />
-          <CardBody className="space-y-4">
+          <Separator />
+          <CardContent className="space-y-4">
             <PlaylistLinksInput values={urls} onChange={setUrls} />
             {formValidation.formError && (
               <p className="text-sm text-danger">{formValidation.formError}</p>
@@ -118,7 +117,7 @@ export default function HomePage() {
                 </span>
               )}
             </div>
-          </CardBody>
+          </CardContent>
         </Card>
 
         {summary && (
