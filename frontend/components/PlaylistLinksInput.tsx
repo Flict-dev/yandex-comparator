@@ -86,7 +86,7 @@ export function PlaylistLinksInput({ values, onChange }: PlaylistLinksInputProps
         <Button variant="primary" onPress={handleAdd}>
           Добавить
         </Button>
-        <Button variant="flat" onPress={modalState.open}>
+        <Button variant="secondary" onPress={modalState.open}>
           Вставить списком
         </Button>
         <Button variant="light" onPress={handleClear}>

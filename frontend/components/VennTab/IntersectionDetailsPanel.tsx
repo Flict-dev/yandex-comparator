@@ -79,7 +79,7 @@ export function IntersectionDetailsPanel({
           <Button size="sm" variant="primary" onPress={handleCsv}>
             Скачать CSV
           </Button>
-          <Button size="sm" variant="flat" onPress={handleCopy}>
+          <Button size="sm" variant="secondary" onPress={handleCopy}>
             Скопировать список
           </Button>
         </div>
