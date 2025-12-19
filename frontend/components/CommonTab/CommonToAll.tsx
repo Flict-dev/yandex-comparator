@@ -55,7 +55,7 @@ export function CommonToAll({
               {intersectionLabel(playlists.map((playlist) => playlist.title))}
             </p>
           </div>
-          <Button size="sm" variant="flat" onPress={() => onSelect(allIds, tracks.length)}>
+          <Button size="sm" variant="secondary" onPress={() => onSelect(allIds, tracks.length)}>
             Открыть пересечение
           </Button>
         </div>

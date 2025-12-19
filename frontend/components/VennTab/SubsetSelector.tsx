@@ -127,17 +127,17 @@ export function SubsetSelector({
           </Select>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button size="sm" variant="flat" onPress={() => onQuickSelect(topSimilar)}>
+          <Button size="sm" variant="secondary" onPress={() => onQuickSelect(topSimilar)}>
             Самые похожие 3
           </Button>
           <Button
             size="sm"
-            variant="flat"
+            variant="secondary"
             onPress={() => onQuickSelect(playlists.slice(0, 3).map((p) => p.id))}
           >
             Первые 3
           </Button>
-          <Button size="sm" variant="flat" onPress={() => onQuickSelect(topBySize)}>
+          <Button size="sm" variant="secondary" onPress={() => onQuickSelect(topBySize)}>
             Топ-5 по размеру
           </Button>
         </div>
