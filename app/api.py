@@ -21,16 +21,17 @@ async def health() -> dict[str, str]:
 
 @router.post("/compare", response_model=ComparisonResultDTO)
 async def compare_playlists(payload: CompareRequestDTO) -> ComparisonResultDTO:
+    refs = []
     try:
-        ref_a = parse_playlist_url(payload.playlist_urls[0])
-        ref_b = parse_playlist_url(payload.playlist_urls[1])
+        for index, url in enumerate(payload.playlist_urls, start=1):
+            refs.append(parse_playlist_url(url))
     except PlaylistUrlError as exc:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Playlist #{index}: {exc}",
+        ) from exc
     try:
-        snapshot_a, snapshot_b = await asyncio.gather(
-            provider.fetch(ref_a),
-            provider.fetch(ref_b),
-        )
+        snapshots = await asyncio.gather(*(provider.fetch(ref) for ref in refs))
     except ProviderError as exc:
         raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=str(exc)) from exc
-    return service.compare(ref_a, ref_b, snapshot_a, snapshot_b)
+    return service.compare(refs, snapshots)

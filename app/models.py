@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -16,35 +16,18 @@ class TrackDTO(BaseModel):
     link: Optional[str] = None
 
 
-class PlaylistMetaDTO(BaseModel):
+class PlaylistDTO(BaseModel):
+    id: str
     title: str
-    owner_login: str
-    kind: int
-    track_count: int
-
-
-class MetricsDTO(BaseModel):
-    jaccard: float
-    overlap: float
-    containment_a: float
-    containment_b: float
-
-
-class CountsDTO(BaseModel):
-    a: int
-    b: int
-    intersection: int
-    union: int
+    owner: str
+    count: int
 
 
 class ComparisonResultDTO(BaseModel):
-    playlist_a: PlaylistMetaDTO
-    playlist_b: PlaylistMetaDTO
-    counts: CountsDTO
-    metrics: MetricsDTO
-    common_tracks: List[TrackDTO]
-    total_common: int
+    playlists: List[PlaylistDTO]
+    track_keys_by_playlist: List[List[str]]
+    tracks_index: Dict[str, TrackDTO]
 
 
 class CompareRequestDTO(BaseModel):
-    playlist_urls: List[str] = Field(min_length=2, max_length=2)
+    playlist_urls: List[str] = Field(min_length=2, max_length=20)
